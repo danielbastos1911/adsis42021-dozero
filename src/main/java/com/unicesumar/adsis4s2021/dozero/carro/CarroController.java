@@ -21,7 +21,7 @@ import com.unicesumar.adsis4s2021.dozero.base.RequisiçãoPutInválida;
 public class CarroController {
 	@Autowired
 	private CarroService service;
-	
+
 	@GetMapping("/{id}")
 	public Carro obterPeloId(@PathVariable("id") String id) {
 		return service.obterPeloId(id);
@@ -31,19 +31,19 @@ public class CarroController {
 	public List<Carro> obterTodos() {
 		return service.obterTodos();
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void excluirPeloId(@PathVariable("id") String id) {
 		service.excluirPeloId(id);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String criarNovo(@RequestBody Carro novo) {
 		novo = service.criar(novo);
 		return novo.getId();
 	}
-	
+
 	@PutMapping("/{id}")
 	public void atualizar(@PathVariable("id") String id, @RequestBody Carro carro) {
 		if (!id.equals(carro.getId())) {
@@ -51,6 +51,5 @@ public class CarroController {
 		}
 		service.atualizar(carro);
 	}
-	
 
 }
