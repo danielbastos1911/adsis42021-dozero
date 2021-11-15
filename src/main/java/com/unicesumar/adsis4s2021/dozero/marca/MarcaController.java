@@ -1,4 +1,4 @@
-package com.unicesumar.adsis4s2021.dozero.carro;
+package com.unicesumar.adsis4s2021.dozero.marca;
 
 import java.util.List;
 
@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.unicesumar.adsis4s2021.dozero.base.RequisiçãoPutInválida;
 
 @RestController
-@RequestMapping("/api/carros")
-public class CarroController {
+@RequestMapping("/api/marcas")
+public class MarcaController { 
 	@Autowired
-	private CarroService service;
+	private MarcaService service;
 
 	@GetMapping("/{id}")
-	public Carro obterPeloId(@PathVariable("id") String id) {
+	public Marca obterPeloId(@PathVariable("id") String id) {
 		return service.obterPeloId(id);
 	}
 
 	@GetMapping
-	public List<Carro> obterTodos() {
+	public List<Marca> obterTodos() {
 		return service.obterTodos();
 	}
 
@@ -39,20 +39,13 @@ public class CarroController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String criarNovo(@RequestBody Carro novo) {
+	public String criarNovo(@RequestBody Marca novo) {
 		novo = service.criar(novo);
 		return novo.getId();
 	}
 
-	@PostMapping("/CriarNovoDTO")
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public String criarNovo(@RequestBody PostCarroDTO novo) {
-		Carro novoCarro = service.criar(novo);
-		return novoCarro.getId();
-	}
-
 	@PutMapping("/{id}")
-	public void atualizar(@PathVariable("id") String id, @RequestBody Carro carro) {
+	public void atualizar(@PathVariable("id") String id, @RequestBody Marca carro) {
 		if (!id.equals(carro.getId())) {
 			throw new RequisiçãoPutInválida();
 		}

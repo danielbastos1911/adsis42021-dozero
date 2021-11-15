@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.unicesumar.adsis4s2021.dozero.base.RegistroJáExistente;
 import com.unicesumar.adsis4s2021.dozero.base.RegistroNãoExistente;
+import com.unicesumar.adsis4s2021.dozero.marca.MarcaRepository;
 
 @Service
 @Transactional
@@ -17,17 +18,42 @@ public class CarroService {
 	@Autowired
 	private CarroRepository repo;
 	
+	@Autowired
+	private MarcaRepository marcaRepository;
 	
 	public List<Carro> obterTodos() {
+		List<NomeDTO> encontrarNomes = repo.encontrarNomes();
+		for (NomeDTO nomeDTO : encontrarNomes) {
+			System.out.println(nomeDTO.getNome());
+		}
 		return repo.findAll();
 	}
-
+ 
 
 	public Carro criar(Carro novo) {
 		if (repo.findById(novo.getId()).isPresent()) {
 			throw new RegistroJáExistente();
 		}
+		
 		return repo.save(novo);
+	}
+	
+	
+	public Carro criar(PostCarroDTO novo) {
+		if (novo.getId() == null || repo.findById(novo.getId()).isPresent()) {
+			throw new RegistroJáExistente();
+		}
+		
+		return repo.save(new Carro(
+				novo.getId(), 
+				novo.getModelo(), 
+				novo.getAnoDeFabricacao(), 
+				novo.getPlaca(), 
+				novo.getCodigoRenavam(), 
+				novo.getQuilometragem(),
+				novo.getTipoDeCombustivel(),
+				marcaRepository.findById(novo.getIdMarca()).get(),
+				novo.getTempoDeMontagem()));
 	}
 
 

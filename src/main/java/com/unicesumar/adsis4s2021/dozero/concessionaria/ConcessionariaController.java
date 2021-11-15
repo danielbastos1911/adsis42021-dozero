@@ -1,4 +1,4 @@
-package com.unicesumar.adsis4s2021.dozero.carro;
+package com.unicesumar.adsis4s2021.dozero.concessionaria;
 
 import java.util.List;
 
@@ -17,42 +17,35 @@ import org.springframework.web.bind.annotation.RestController;
 import com.unicesumar.adsis4s2021.dozero.base.RequisiçãoPutInválida;
 
 @RestController
-@RequestMapping("/api/carros")
-public class CarroController {
+@RequestMapping("/api/concessionarias")
+public class ConcessionariaController { 
 	@Autowired
-	private CarroService service;
+	private ConcessionariaService service;
 
 	@GetMapping("/{id}")
-	public Carro obterPeloId(@PathVariable("id") String id) {
+	public Concessionaria obterPeloId(@PathVariable("id") Long id) {
 		return service.obterPeloId(id);
 	}
 
 	@GetMapping
-	public List<Carro> obterTodos() {
+	public List<Concessionaria> obterTodos() {
 		return service.obterTodos();
 	}
 
 	@DeleteMapping("/{id}")
-	public void excluirPeloId(@PathVariable("id") String id) {
+	public void excluirPeloId(@PathVariable("id") Long id) {
 		service.excluirPeloId(id);
 	}
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String criarNovo(@RequestBody Carro novo) {
+	public Long criarNovo(@RequestBody Concessionaria novo) {
 		novo = service.criar(novo);
 		return novo.getId();
 	}
 
-	@PostMapping("/CriarNovoDTO")
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public String criarNovo(@RequestBody PostCarroDTO novo) {
-		Carro novoCarro = service.criar(novo);
-		return novoCarro.getId();
-	}
-
 	@PutMapping("/{id}")
-	public void atualizar(@PathVariable("id") String id, @RequestBody Carro carro) {
+	public void atualizar(@PathVariable("id") Long id, @RequestBody Concessionaria carro) {
 		if (!id.equals(carro.getId())) {
 			throw new RequisiçãoPutInválida();
 		}
