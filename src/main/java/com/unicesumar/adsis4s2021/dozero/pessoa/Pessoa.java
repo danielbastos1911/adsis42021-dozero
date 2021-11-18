@@ -3,6 +3,7 @@ package com.unicesumar.adsis4s2021.dozero.pessoa;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -13,7 +14,7 @@ public class Pessoa extends BaseEntity {
 	private String nome;
 	private String email;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Papel> papeis = new ArrayList<>();
 		
 	public String getNome() {
