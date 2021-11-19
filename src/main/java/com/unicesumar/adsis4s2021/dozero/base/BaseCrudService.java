@@ -10,6 +10,10 @@ public class BaseCrudService<ENTITY extends BaseEntity, REPOSITORY extends JpaRe
 	@Autowired
 	private REPOSITORY repo;
 
+	protected REPOSITORY getRepo() {
+		return repo;
+	}
+	
 	public List<ENTITY> obterTodos() {
 		return repo.findAll();
 	}

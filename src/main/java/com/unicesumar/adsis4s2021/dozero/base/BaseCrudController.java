@@ -26,6 +26,10 @@ public class BaseCrudController<
 	@Autowired
 	private SERVICE service;
 
+
+	public SERVICE getService() {
+		return service;
+	}
 	
 	@GetMapping
 	public List<ENTITY> obterTodos() {
